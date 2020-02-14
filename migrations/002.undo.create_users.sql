@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS t-travels_users;
+DROP TABLE IF EXISTS t_travels_users;

@@ -1,4 +1,4 @@
-INSERT INTO destinations (id, dest_title)
+INSERT INTO destinations (dest_id, dest_title)
 VALUES
   (1, 'Barcelona'),
   (2, 'Madrid'),

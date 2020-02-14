@@ -1,6 +1,6 @@
 const itemsService = {
   getDestItems(knex, destId){
-    return knex.select('*').from('items').where({dest_id: destId});
+    return knex.select('*').from('items').join('user_dest', {'items.user_dest_id': 'user_dest.userdest_id'}).where({'user_dest.dest_id': destId});
   },
 
   insertItem(knex, newItem) {
@@ -23,7 +23,7 @@ const itemsService = {
 
   deleteItem(knex, id){
     return knex('items')
-      .where({ id })
+      .where({ 'item_id': id })
       .delete();
   }
 
