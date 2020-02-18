@@ -7,6 +7,8 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const errorHandler = require('./error-handler')
 const destinationsRouter = require('../routers/DestinationsRouter')
+const entriesRouter = require('../routers/EntriesRouter')
+const itemsRouter = require('../routers/ItemsRouter')
 
 const app = express()
 
@@ -19,7 +21,8 @@ app.use(cors())
 app.use(helmet())
 
 app.use(destinationsRouter)
-
+app.use(entriesRouter)
+app.use(itemsRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, boilerplate!')

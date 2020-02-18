@@ -4,14 +4,28 @@ const DestinationsService = {
     return knex.select('*').from('destinations').innerJoin('user_dest', 'destinations.dest_id', 'user_dest.dest_id')
   },
 
-  insertDestination(knex, newDestination) {
+  getDestination(knex, destId) {
+    return knex.select('*').from('destinations').innerJoin('user_dest', 'destinations.dest_id', 'user_dest.dest_id').where({dest_id: destId})
+  },
+
+  insertDestination(knex, destTitle) {
     return knex
-      .insert(newDestination)
       .into('destinations')
+      .insert({dest_title: destTitle})
       .returning('*')
       .then(rows => {
         return rows[0];
       });
+  },
+
+  insertDestDetails(knex, destId, newDest) {
+    return knex
+      .into('user_dest')
+      .insert({dest_id: destId, goal_date: newDest.goal_date, budget: newDest.budget})
+      .returning('*')
+      .then(rows => {
+        return rows[0];
+      })
   },
 
   getById(knex, id) {
@@ -22,15 +36,21 @@ const DestinationsService = {
       .first();
   },
 
-  updateDestination(knex, id, newData) {
+  updateDestination(knex, destId, destTitle) {
     return knex('destinations')
-      .where({ id })
-      .update(newData);
+      .where({ dest_id: destId })
+      .update({dest_title: destTitle});
+  },
+
+  updateDestDetails(knex, destId, newData){
+    return knex('user_dest')
+      .where({dest_id: destId})
+      .update({dest_id: destId, goal_date: newData.goal_date, budget: newData.budget})
   },
 
   deleteDestination(knex, id) {
     return knex('destinations')
-      .where({ id })
+      .where({ dest_id: id })
       .delete();
   }
 };

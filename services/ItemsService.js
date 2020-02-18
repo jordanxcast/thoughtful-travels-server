@@ -1,12 +1,13 @@
 const itemsService = {
   getDestItems(knex, destId){
-    return knex.select('*').from('items').join('user_dest', {'items.user_dest_id': 'user_dest.userdest_id'}).where({'user_dest.dest_id': destId});
+    return knex.select('*').from('items').join('user_dest', {'items.dest_id': 'user_dest.dest_id'}).where({'user_dest.dest_id': destId});
   },
 
-  insertItem(knex, newItem) {
+  insertItem(knex, destId, newItem) {
     return knex 
-      .insert(newItem)
+      .insert({item_content: newItem, dest_id: destId})
       .into('items')
+      .where({dest_id: destId})
       .returning('*')
       .then(rows => {
         return rows[0];
@@ -21,9 +22,9 @@ const itemsService = {
       .first();
   },
 
-  deleteItem(knex, id){
+  deleteItem(knex, item_id){
     return knex('items')
-      .where({ 'item_id': id })
+      .where({item_id})
       .delete();
   }
 

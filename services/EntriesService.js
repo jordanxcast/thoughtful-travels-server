@@ -5,12 +5,12 @@ const entriesService = {
   },
 
   getDestEntries(knex, destId){
-    return knex.select('*').from('journal_entries').join('user_dest', {'journal_entries.user_dest_id': 'user_dest.userdest_id'}).where({'user_dest.dest_id': destId})
+    return knex.select('*').from('journal_entries').join('user_dest', {'journal_entries.dest_id': 'user_dest.dest_id'}).where({'user_dest.dest_id': destId})
   },
   
   insertEntry(knex, newEntry) {
     return knex 
-      .insert(newEntry)
+      .insert({dest_id: newEntry.dest_id, subject: newEntry.subject, body: newEntry.body})
       .into('journal_entries')
       .returning('*')
       .then(rows => {
