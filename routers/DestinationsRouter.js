@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const xss = require('xss')
 const destinationsService = require('../services/DestinationsService')
+const { requireAuth } = require('../src/middleware/jwt-auth')
 const destinationsRouter = express.Router()
 const bodyParser = express.json()
 
@@ -15,18 +16,19 @@ const bodyParser = express.json()
 
 destinationsRouter
   .route('/api/destinations')
-  .get((req, res, next) => {
-    const knexInstance = req.app.get('db')
+  .all(requireAuth)
+  // .get((req, res, next) => {
+  //   const knexInstance = req.app.get('db')
 
-    destinationsService.getAllDestinations(knexInstance)
-      .then(d => {
-        res.json(d)
-      })
-      // .then(d => {
-      //   res.json(d.map(serializeDestination))
-      // })
-      .catch(next)
-  })
+  //   destinationsService.getAllDestinations(knexInstance)
+  //     .then(d => {
+  //       res.json(d)
+  //     })
+  //     // .then(d => {
+  //     //   res.json(d.map(serializeDestination))
+  //     // })
+  //     .catch(next)
+  // })
   .post(bodyParser, (req, res, next) => {
     const {dest_title, goal_date, budget} = req.body
     const newDest = {
@@ -42,6 +44,8 @@ destinationsRouter
         }
       })
     }
+
+    newDest.user_id = req.user.id
 
     destinationsService.insertDestination(
       req.app.get('db'),
@@ -65,6 +69,7 @@ destinationsRouter
 
 destinationsRouter
   .route('/api/destinations/:dest_id')
+  .all(requireAuth)
   .all((req, res, next) => {
     destinationsService.getById(
       req.app.get('db'),
