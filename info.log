@@ -24,3 +24,17 @@
 {"level":"error"}
 {"level":"error"}
 {"level":"error"}
+{"message":"userId is not defined","level":"error"}
+{"message":"userId is not defined","level":"error"}
+{"message":"userId is not defined","level":"error"}
+{"message":"userId is not defined","level":"error"}
+{"message":"select * from \"destinations\" inner join \"user_dest\" on \"destinations\".\"dest_id\" = \"user_dest\".\"dest_id\" where \"dest_id\" = $1 - column reference \"dest_id\" is ambiguous","level":"error"}
+{"message":"select * from \"destinations\" inner join \"user_dest\" on \"destinations\".\"dest_id\" = \"user_dest\".\"dest_id\" where \"dest_id\" = $1 - column reference \"dest_id\" is ambiguous","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}

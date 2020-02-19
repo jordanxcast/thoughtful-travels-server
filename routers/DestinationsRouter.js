@@ -17,19 +17,21 @@ const bodyParser = express.json()
 destinationsRouter
   .route('/api/destinations')
   .all(requireAuth)
-  // .get((req, res, next) => {
-  //   const knexInstance = req.app.get('db')
+  .get((req, res, next) => {
+    const { id } = req.user
+    const knexInstance = req.app.get('db')
 
-  //   destinationsService.getAllDestinations(knexInstance)
-  //     .then(d => {
-  //       res.json(d)
-  //     })
-  //     // .then(d => {
-  //     //   res.json(d.map(serializeDestination))
-  //     // })
-  //     .catch(next)
-  // })
+    destinationsService.getAllDestinations(knexInstance, id)
+      .then(dest => {
+        res.json(dest)
+      })
+      // .then(d => {
+      //   res.json(d.map(serializeDestination))
+      // })
+      .catch(next)
+  })
   .post(bodyParser, (req, res, next) => {
+    const { id } = req.user
     const {dest_title, goal_date, budget} = req.body
     const newDest = {
       goal_date: goal_date,
@@ -45,17 +47,18 @@ destinationsRouter
       })
     }
 
-    newDest.user_id = req.user.id
+    // newDest.user_id = req.user.id
 
     destinationsService.insertDestination(
       req.app.get('db'),
       dest_title
     )
       .then(destCreated => {
-        destinationsService.insertDestDetails(
+        return destinationsService.insertDestDetails(
           req.app.get('db'),
           destCreated.dest_id,
-          newDest
+          newDest,
+          id
         )
       })
       
@@ -93,8 +96,8 @@ destinationsRouter
       knexInstance,
       req.params.dest_id
     )
-      .then(d => {
-        res.json(d)
+      .then(dest => {
+        res.json(dest)
       })
       // .then(d => {
       //   res.json(d.map(serializeDestination))

@@ -1,11 +1,11 @@
 /* eslint-disable semi */
 const DestinationsService = {
-  getAllDestinations(knex) {
-    return knex.select('*').from('destinations').innerJoin('user_dest', 'destinations.dest_id', 'user_dest.dest_id')
+  getAllDestinations(knex, userId) {
+    return knex.select('*').from('destinations').join('user_dest', {'destinations.dest_id': 'user_dest.dest_id'}).where({'user_dest.user_id': userId})
   },
 
   getDestination(knex, destId) {
-    return knex.select('*').from('destinations').innerJoin('user_dest', 'destinations.dest_id', 'user_dest.dest_id').where({dest_id: destId})
+    return knex.select('*').from('destinations').join('user_dest', {'destinations.dest_id': 'user_dest.dest_id'}).where({'destinations.dest_id': destId}).first()
   },
 
   insertDestination(knex, destTitle) {
@@ -18,10 +18,10 @@ const DestinationsService = {
       });
   },
 
-  insertDestDetails(knex, destId, newDest) {
+  insertDestDetails(knex, destId, newDest, id) {
     return knex
       .into('user_dest')
-      .insert({dest_id: destId, goal_date: newDest.goal_date, budget: newDest.budget})
+      .insert({dest_id: destId, goal_date: newDest.goal_date, budget: newDest.budget, user_id: id})
       .returning('*')
       .then(rows => {
         return rows[0];
