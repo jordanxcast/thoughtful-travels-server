@@ -116,10 +116,12 @@ destinationsRouter
   })
   .patch(bodyParser, (req, res, next) => {
     const { dest_id, dest_title, goal_date, budget } = req.body
+    
     const destDataUpdate = {
       goal_date: goal_date,
       budget: budget,
     }
+    console.log(destDataUpdate, typeof(dest_id), typeof(dest_title))
 
     if( req.params.dest_id == null ) {
       return res.status(400).json({
@@ -135,17 +137,23 @@ destinationsRouter
       dest_title
     )
       .then(destUpdate => {
+        console.log(destUpdate, 'dest updated', destDataUpdate)
+
         destinationsService.updateDestDetails(
           req.app.get('db'),
           dest_id,
-          destDataUpdate
+          null, 
+          budget
         )
+          .then((numRowsAffected) => {
+            console.log(numRowsAffected, '!!!!')
+            res
+              .json(numRowsAffected)
+              .status(204)
+              .end()
+          })
       })
-      .then(numRowsAffected => {
-        res
-          .status(204)
-          .end()
-      })
+      
       .catch(next)
   })
 

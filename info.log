@@ -38,3 +38,13 @@
 {"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
 {"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
 {"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"delete from \"destinations\" where \"dest_id\" = $1 - update or delete on table \"destinations\" violates foreign key constraint \"journal_entries_dest_id_fkey\" on table \"journal_entries\"","level":"error"}
+{"message":"select * from \"destinations\" where \"dest_id\" = $1 limit $2 - invalid input syntax for type integer: \"undefined\"","level":"error"}
+{"message":"select * from \"destinations\" where \"dest_id\" = $1 limit $2 - invalid input syntax for type integer: \"undefined\"","level":"error"}
+{"message":"select * from \"destinations\" where \"dest_id\" = $1 limit $2 - invalid input syntax for type integer: \"undefined\"","level":"error"}
+{"message":"select * from \"destinations\" where \"dest_id\" = $1 limit $2 - invalid input syntax for type integer: \"undefined\"","level":"error"}
+{"message":"Cannot chain .first() on \"update\" query!","level":"error"}
+{"message":"Cannot chain .first() on \"update\" query!","level":"error"}

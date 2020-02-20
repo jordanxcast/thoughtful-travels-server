@@ -39,13 +39,24 @@ const DestinationsService = {
   updateDestination(knex, destId, destTitle) {
     return knex('destinations')
       .where({ dest_id: destId })
-      .update({dest_title: destTitle});
+      .first()
+      .update({dest_title: destTitle})
+      .returning('*')
+      .then(rows => {
+        return rows[0];
+      })
   },
 
-  updateDestDetails(knex, destId, newData){
+  updateDestDetails(knex, destId, date, budget){
     return knex('user_dest')
       .where({dest_id: destId})
-      .update({dest_id: destId, goal_date: newData.goal_date, budget: newData.budget})
+      .first()
+      .update({goal_date: date, budget: budget})
+      .returning('*')
+      .then(rows => {
+        return rows[0];
+      })
+      
   },
 
   deleteDestination(knex, id) {
