@@ -121,7 +121,6 @@ destinationsRouter
       goal_date: goal_date,
       budget: budget,
     }
-    console.log(destDataUpdate, typeof(dest_id), typeof(dest_title))
 
     if( req.params.dest_id == null ) {
       return res.status(400).json({
@@ -137,8 +136,6 @@ destinationsRouter
       dest_title
     )
       .then(destUpdate => {
-        console.log(destUpdate, 'dest updated', destDataUpdate)
-
         destinationsService.updateDestDetails(
           req.app.get('db'),
           dest_id,
@@ -146,7 +143,6 @@ destinationsRouter
           budget
         )
           .then((numRowsAffected) => {
-            console.log(numRowsAffected, '!!!!')
             res
               .json(numRowsAffected)
               .status(204)

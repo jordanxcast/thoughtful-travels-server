@@ -56,7 +56,6 @@ describe('Auth User Endpoints', function() {
           password: testUser.password,
           date_created: '2020-01-20 00:00:00'
         }
-        console.log(testUser.username)
 
         const expectedToken = jwt.sign(
           { id: testUser.id },
