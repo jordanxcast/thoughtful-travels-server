@@ -142,7 +142,7 @@ destinationsRouter
         destinationsService.updateDestDetails(
           req.app.get('db'),
           dest_id,
-          null, 
+          goal_date, 
           budget
         )
           .then((numRowsAffected) => {

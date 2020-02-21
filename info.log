@@ -48,3 +48,6 @@
 {"message":"select * from \"destinations\" where \"dest_id\" = $1 limit $2 - invalid input syntax for type integer: \"undefined\"","level":"error"}
 {"message":"Cannot chain .first() on \"update\" query!","level":"error"}
 {"message":"Cannot chain .first() on \"update\" query!","level":"error"}
+{"message":"insert into \"t_travels_users\" (\"fullname\", \"password\", \"username\") values ($1, $2, $3) returning * - duplicate key value violates unique constraint \"t_travels_users_username_key\"","level":"error"}
+{"message":"insert into \"t_travels_users\" (\"fullname\", \"password\", \"username\") values ($1, $2, $3) returning * - duplicate key value violates unique constraint \"t_travels_users_username_key\"","level":"error"}
+{"message":"insert into \"t_travels_users\" (\"fullname\", \"password\", \"username\") values ($1, $2, $3) returning * - duplicate key value violates unique constraint \"t_travels_users_username_key\"","level":"error"}
