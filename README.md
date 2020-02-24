@@ -1,4 +1,4 @@
-### Thoughtful Travels Server
+# Thoughtful Travels Server
 This server is used for the Thoughtful Travels application found at: https://github.com/jordanxcast/thoughtful-travels-client
 
 ## Endpoints
