@@ -1,26 +1,22 @@
-# Express Boilerplate!
+### Thoughtful Travels Server
+This server is used for the Thoughtful Travels application found at: https://github.com/jordanxcast/thoughtful-travels-client
 
-This is a boilerplate project used for starting new projects!
-
-## Set up
-
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+## Endpoints
+- `/api/destinations` - GET & POST requests 
+- `/api/destinations/:dest_id` - GET & DELETE & PATCH requests
+- `/api/entries/:dest_id` - GET & POST requests
+- `/api/entries/:entry_id` - DELETE requests
+- `api/items/:dest_id` - GET & POST requests
+- `api/items/:item_id` - DELETE requests
+- `/api/users` - POST requests to create a new user
+- `/api/auth/login` - POST requests for existing user to login to their account
 
 ## Scripts
+- Start the application `npm start`
 
-Start the application `npm start`
+- Start nodemon for the application `npm run dev`
 
-Start nodemon for the application `npm run dev`
+- Run the tests `npm test`
 
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.# Noteful-Server-Jordan-Jaye
+## Deployed 
+Thoughtful Travels server is deployed with Heroku at https://t-travels.herokuapp.com/
