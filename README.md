@@ -6,8 +6,8 @@ This server is used for the Thoughtful Travels application found at: https://git
 - `/api/destinations/:dest_id` - GET & DELETE & PATCH requests
 - `/api/entries/:dest_id` - GET & POST requests
 - `/api/entries/:entry_id` - DELETE requests
-- `api/items/:dest_id` - GET & POST requests
-- `api/items/:item_id` - DELETE requests
+- `/api/items/:dest_id` - GET & POST requests
+- `/api/items/:item_id` - DELETE requests
 - `/api/users` - POST requests to create a new user
 - `/api/auth/login` - POST requests for existing user to login to their account
 
