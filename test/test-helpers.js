@@ -97,27 +97,27 @@ function makeEntriesArray(users) {
   return [
     {
       id: 7,
-      subject: null,
+      subject: 'Day One',
       body: 'item content test 1',
-      user_dest_id: 4,
+      user_dest_id: null,
       dest_id: 4,
-      dest_created: '2020-02-20 20:43:10.310604',
+      date_created: '2020-02-20 20:43:10.310604',
     },
     {
       id: 8,
-      subject: null,
+      subject: 'Day Two',
       body: 'item content test 2',
-      user_dest_id: 5,
+      user_dest_id: null,
       dest_id: 5,
-      dest_created: '2020-02-20 20:43:10.310604',
+      date_created: '2020-02-20 20:43:10.310604',
     },
     {
       id: 9,
-      subject: null, 
+      subject: 'Day 3', 
       body: 'item content test 3',
-      user_dest_id: 6,
+      user_dest_id: null,
       dest_id: 6,
-      dest_created: '2020-02-20 20:43:10.310604',
+      date_created: '2020-02-20 20:43:10.310604',
     },
   ]
 }
@@ -146,6 +146,80 @@ function seedUsers(db, users) {
     )
 }
 
+// function seedDestTables(db, users, destinations, items=[], entries=[]) {
+//   return db.transaction(async trx => {
+//     await trx.into('t_travels_users').insert(users)
+//     await trx.into('destinations').insert(destinations)
+//     //update sequence to mate the forced id values
+//     await Promise.all([
+//       trx.raw(
+//         `SELECT setval('t_travels_users_id_seq', ?)`,
+//         [users[users.length -1].id],
+//       ),
+//       trx.raw(
+//         `SELECT setval('destinations_dest_id_seq', ?)`,
+//         [destinations[destinations.length - 1].dest_id],
+//       )
+//     ])
+//     if (items.length) {
+//       await trx.into('items').insert(items)
+//       await trx.raw(
+//         `SELECT setval('items_item_id_seq', ?)`,
+//         [items[items.length - 1].item_id],
+//       )
+//     }
+//     if(entries.length) {
+//       await trx.into('journal_entries').insert(entries)
+//       await trx.raw(
+//         `SELECT setval('journal_entries_id_seq', ?)`,
+//         [entries[entries.length -1].id]
+//       )
+//     }
+//   })
+// }
+
+function seedDestTables(db, users, destinations, items=[], entries=[]) {
+  return db.transaction(async trx => {
+    await seedUsers(trx, users)
+    await trx.into('destinations').insert(destinations)
+    //update sequence to mate the forced id values
+    await 
+      trx.raw(
+        `SELECT setval('destinations_dest_id_seq', ?)`,
+        [destinations[destinations.length - 1].dest_id],
+      )
+  
+    if (items.length) {
+      await trx.into('items').insert(items)
+      await trx.raw(
+        `SELECT setval('items_item_id_seq', ?)`,
+        [items[items.length - 1].item_id],
+      )
+    }
+    if (entries.length) {
+      await trx.into('journal_entries').insert(entries)
+      await trx.raw(
+        `SELECT setval('journal_entries_id_seq', ?)`,
+        [entries[entries.length -1].id]
+      )
+    }
+  })
+}
+
+function makeAuthHeader(user) {
+  const token =Buffer.from(`${user.username}: ${user.password}`).toString('base64')
+  return `Bearer ${token}`
+}
+
+
+function seedMaliciousDestination(db, user, dest) {
+  return seedUsers(db, [user])
+    .then(() => {
+      db 
+        .into('destinations')
+        .insert(dest)
+    })
+}
 
 
 module.exports = {
@@ -155,5 +229,8 @@ module.exports = {
   makeItemsArray, 
   makeEntriesArray,
   makeDestinationsFixture,
-  seedUsers
+  seedUsers,
+  seedDestTables,
+  makeAuthHeader,
+  seedMaliciousDestination
 }
