@@ -206,8 +206,12 @@ function seedDestTables(db, users, destinations, items=[], entries=[]) {
   })
 }
 
-function makeAuthHeader(user) {
-  const token =Buffer.from(`${user.username}: ${user.password}`).toString('base64')
+function makeAuthHeader(user, secret=process.env.JWT_SECRET) {
+  // const token = Buffer.from(`${user.username}: ${user.password}`).toString('base64')
+  const token = jwt.sign({ id: user.id}, secret, {
+    subject: user.username,
+    algorithm: 'HS256',
+  })
   return `Bearer ${token}`
 }
 

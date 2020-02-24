@@ -7,7 +7,7 @@ const helpers = require('./test-helpers')
 describe('Auth User Endpoints', function() {
   let db
 
-  const testUsers = helpers.makeUsersArray()
+  const {testUsers} = helpers.makeDestinationsFixture()
   const testUser = testUsers[0]
 
   before('make knex instance', () => {
@@ -22,21 +22,21 @@ describe('Auth User Endpoints', function() {
 
   before('cleanup', () => helpers.cleanTables(db))
 
-  this.afterEach('cleanup', () => helpers.cleanTables(db))
+  afterEach('cleanup', () => helpers.cleanTables(db))
 
-  describe('POST /api/users', () => {
-    this.beforeEach('insert users', () => {
+  describe('POST /api/auth/login', () => {
+    beforeEach('insert users', () => {
       helpers.seedUsers(
         db, 
         testUsers
       )
     })
 
-    const requireFields = ['user_name', 'password']
+    const requireFields = ['username', 'password']
 
     requireFields.forEach(field => {
       const loginAttemptBody = {
-        user_name: testUser.user_name,
+        username: testUser.username,
         password: testUser.password,
       }
 
@@ -44,21 +44,35 @@ describe('Auth User Endpoints', function() {
         delete loginAttemptBody[field]
 
         return supertest(app)
-          .post('/api/users')
+          .post('/api/auth/login')
           .send(loginAttemptBody)
+          .expect(400)
+      })
+
+      it('responds 400 \'invalid username or password\' when bad username', () => {
+        const userInvalid = {username: 'user-not-exist', password: 'existy' }
+        return supertest(app)
+          .post('/api/auth/login')
+          .send(userInvalid)
+          .expect(400)
+      })
+
+      it('responds 400 \'invalid username or password\' when bad password', () => {
+        const userInvalidPW = { username: testUser.username, password: 'incorrectPW' }
+        return supertest(app)
+          .post('/api/auth/login')
+          .send(userInvalidPW)
           .expect(400)
       })
 
       it('responds with 200 and JWT auth token using secret when valid credentials', () => {
         const userValidCreds= {
-          fullname: testUser.fullname,
           username: testUser.username,
           password: testUser.password,
-          date_created: '2020-01-20 00:00:00'
         }
 
         const expectedToken = jwt.sign(
-          { id: testUser.id },
+          { id: testUser.id }, //payload
           process.env.JWT_SECRET,
           {
             subject: testUser.username,
@@ -66,7 +80,7 @@ describe('Auth User Endpoints', function() {
           }
         )
         return supertest(app)
-          .post('/api/users')
+          .post('/api/auth/login')
           .send(userValidCreds)
           .expect(200, {
             authToken: expectedToken
